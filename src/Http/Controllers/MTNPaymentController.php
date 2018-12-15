@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 
 use Config;
 
+use Peko\MobileMoney\Librairies\MTNMobileMoney;
+
 use Redirect;
 
 class MTNPaymentController extends Controller
@@ -16,15 +18,21 @@ class MTNPaymentController extends Controller
 
     public function momo(Request $request){
 
-    	//dd((int)$request->number);
-    	//dd((int)$request->amount);
+    	
 
-    	//$this->validate($request,['number'=>'required|integer']);
+    	$mobile = new MTNMobileMoney($request->amount, $request->number);
 
-    	$data = Config::get('mobilepayment.mtnpay.email');
+    	$message = $mobile->validate_data();
 
-    	dd($data);
+    	if ($message === false){
 
+    		return response()->json('The telephone number is incorrect');
+
+    	} else{
+
+    		$dtails = $mobile->run_payment($message['number'], $message['amount']);
+    	}
+    	
     }
 
     

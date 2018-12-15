@@ -27,9 +27,10 @@ return [
 
 	
 
-	'mtnpay' => [
+	'mtn' => [
         'email' => env('MTN_EMAIL'),
         'password' => env('MTN_PASSWORD'),
+        'phonenumber'=>env('MTN_NUMBER'),
         
     ],
 

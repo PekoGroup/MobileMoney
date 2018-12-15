@@ -4,6 +4,8 @@ namespace Peko\MobileMoney;
 
 use Illuminate\Support\Facades\Validator;
 
+use Config;
+
 class Client
 {
     // Build wonderful things
@@ -33,26 +35,31 @@ class Client
 
 	 	$data['number'] = $this->phonenumber;
 
-	 	//Make sure the number is an integer and not less than 9 digits
+	 	$businessphone = Config::get('mobilemoney.mtn.phonenumber');
 
-	 	$validator = Validator::make($data, [
+	 	if($data['number'] != $businessphone ){
+		 	//Make sure the number is an integer and not less than 9 digits
 
-	 		'number' => 'required|integer|regex:/^(\d{9})$/',
+			 	$validator = Validator::make($data, [
 
-	 		'amount' => 'required|integer',
-	 	]);
+			 		'number' => 'required|integer|regex:/^(\d{9})$/',
 
-	 	//Checks if validator passes the test or not.
+			 		'amount' => 'required|integer',
+			 	]);
 
-	 	if ($validator->fails()) {
+			 	//Checks if validator passes the test or not.
 
-		    return false;
+			 	if ($validator->fails()) {
 
-		} else {
+				    return false;
 
-		    return $data;
+				} else {
+
+				    return $data;
+				}
 		}
-	 }
 
-	 
+		return 'Wrong number';
+
+	} 
 }

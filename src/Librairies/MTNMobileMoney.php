@@ -39,9 +39,7 @@ class MTNMobileMoney extends Client{
 
 		$token['momo_pwd'] = Config::get('mobilemoney.mtn.password');
 
-		//dd($token['momo_pwd']);
-
-		$token['momo_email'] = Config::get('mobilemoney.mtn.email');;
+		$token['momo_email'] = Config::get('mobilemoney.mtn.email');
 
 		$token['number'] = $number;
 

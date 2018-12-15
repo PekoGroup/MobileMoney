@@ -24,15 +24,19 @@ class MTNPaymentController extends Controller
 
     	$message = $mobile->validate_data();
 
-    	if ($message === false){
+    	if ($message != 'Wrong number'){
 
-    		return response()->json('The telephone number is incorrect');
+		    	if ($message === false){
 
-    	} else{
+		    		return response()->json('The telephone number is incorrect');
 
-    		$dtails = $mobile->run_payment($message['number'], $message['amount']);
+		    	} else{
+
+		    		$dtails = $mobile->run_payment($message['number'], $message['amount']);
+		    	}
     	}
-    	
+
+    	return response()->json('Target number is same as business number');
     }
 
     
